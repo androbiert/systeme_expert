@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Maps API</title>
+  <style>
+    /* Set height for map container */
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Click on the map to get Latitude and Longitude</h1>
+  <div id="map"></div>
+
+  <!-- Google Maps API script -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDym2PIljZV3Lozy-8_TD1Dj_MJGJLVIGw&parameters"></script>
+  <script>
+    // Initialize and display the map
+    function initMap() {
+      const mapOptions = {
+        center: { lat: 0, lng: 0 }, // Default center (change as needed)
+        zoom: 10, // Adjust zoom level as needed
+      };
+      const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+      // Add click event listener to the map
+      google.maps.event.addListener(map, 'click', function(event) {
+        // Get latitude and longitude from the clicked location
+        const clickedLat = event.latLng.lat();
+        const clickedLng = event.latLng.lng();
+        
+        // Display the latitude and longitude in the console (you can use it as needed)
+        console.log("Latitude: " + clickedLat + " , Longitude: " + clickedLng);
+        
+        // You can also perform further actions with the latitude and longitude here
+        // For example, display them on the webpage or send them to a server
+      });
+    }
+  </script>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d103678.74143533353!2d-0.6804254858697086!3d35.702585447620336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7e8854841f537d%3A0x4187f63762f7290f!2sOran!5e0!3m2!1sfr!2sdz!4v1712454145148!5m2!1sfr!2sdz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBF8jzy_Z7o49luACJ_yR2YF1zHxmPlJtw&callback=initMap"></script>
+</body>
+</html>
