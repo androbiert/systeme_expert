@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Efficiency Diagnostic</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="robot-container">
+            <div class="robot" id="robot"></div>
+        </div>
+        <div class="chat-container" id="chat-container">
+            <div class="chat-box" id="chat-box">
+                <div class="message">Hello Visitor, I can help you upgrade the performance of your house. Please answer the following questions:</div>
+            </div>
+        </div>
+        <form action="{% url 'home' %}" method="post" id="question-form">
+            {% csrf_token %}
+            <!-- Questions and options will be dynamically populated here -->
+            <div id="start-button-container">
+                <button type="button" id="start-btn">Start Diagnostics</button>
+            </div>
+        </form>
+    </div>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

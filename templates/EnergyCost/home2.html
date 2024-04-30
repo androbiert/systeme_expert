@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Efficiency Diagnostic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .cards {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+        }
+        .card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: 300px;
+            width: 400px;
+            border-radius: 10px;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            transition: 400ms;
+            position: relative;
+        }
+        .card img {
+            width: 80%;
+            height: 70%;
+            border-radius: 10%;
+            transition: 400ms;
+            margin-bottom: 5px;
+        }
+        .cards .card:hover {
+            transform: scale(1.1, 1.1);
+        }
+        .cards .card img:hover {
+            transform: scale(1.05, 1.05);
+        }
+        .cards:hover > .card:not(:hover) {
+            filter: blur(10px);
+            transform: scale(0.9, 0.9);
+        }
+
+        /* Hide the actual radio button */
+        .card input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 1; /* Ensure radio button is clickable */
+        }
+
+        /* Style the card (label) to have a border and padding */
+        .card {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 0;
+            transition:  0.3s ease;
+        }
+
+        /* Style the selected card */
+        .card.selected {
+            border-color: #4CAF50; /* Green border for selected */
+            background-color: #7ed181; /* Change background color when selected */
+        }
+        .cont{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0 0 0;
+        }
+        .next-btn{
+            width: 30%;
+            border: none;
+            border-radius: 20px;
+            padding: 5px;
+            background-color: #7ed181;
+
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Question 1: Number of rooms -->
+    <form action="{%url 'home' %}" method="POST">
+        {%csrf_token%}
+       <div class="question-container" id="question-1">
+        <h1>How many rooms do you have in your house?</h1>
+        <div class="cards">
+            <!-- Red card represents "Few" -->
+            <label class="card" for="few" onclick="selectCard(this)">
+                <input type="radio" name="num_rooms" value="2" id="few">
+                <img src="{% static 'images/few.jpeg' %}" alt="Few Rooms">
+                <p class="second-text">1-3</p>
+            </label>
+            <!-- Blue card represents "Enough" -->
+            <label class="card" for="enough" onclick="selectCard(this)">
+                <input type="radio" name="num_rooms" value="4" id="enough">
+                <img src="{% static 'images/enough.jpeg' %}" alt="Enough Rooms">
+                <p class="second-text">4-5</p>
+            </label>
+            <!-- Green card represents "Many" -->
+            <label class="card" for="many" onclick="selectCard(this)">
+                <input type="radio" name="num_rooms" value="8" id="many">
+                <img src="{% static 'images/many.jpeg' %}" alt="Many Rooms">
+                <p class="second-text">5-8 or more</p>
+            </label>
+        </div>
+        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+
+    </div>
+
+    <!-- Question 2: Lighting preference -->
+    <div class="question-container" id="question-2" style="display: none;">
+        <h1>What type of lighting do you use mostly?</h1>
+        <div class="cards">
+            <!-- Red card represents "Incandescent" -->
+            <label class="card" for="Incandescent" onclick="selectCard(this)">
+                <input type="radio" name="lighting" value="incandescent" id="Incandescent">
+                <img src="{% static 'images/incandescent.jpeg' %}" alt="Incandescent Bulbs">
+                <p class="second-text">Incandescent</p>
+            </label>
+            <!-- Blue card represents "LED" -->
+            <label class="card" for="LED" onclick="selectCard(this)">
+                <input type="radio" name="lighting" value="LED" id="LED">
+                <img src="{% static 'images/led.jpeg' %}" alt="LED Bulbs">
+                <p class="second-text">LED</p>
+            </label>
+        </div>
+        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+
+    </div>
+
+    <div class="question-container" id="question-3" style="display: none;">
+        <h1>How efficient are your appliances?</h1>
+        <div class="cards">
+           
+            <label class="card" for="good" onclick="selectCard(this)">
+                <input type="radio" name="appliance_efficiency" value="good" id="good">
+                <img src="{% static 'images/good_appliance.jpeg' %}" alt="good_appliance">
+                <p class="second-text">Good</p>
+            </label>
+            <label class="card" for="low" onclick="selectCard(this)">
+                <input type="radio" name="appliance_efficiency" value="low" id="low">
+                <img src="{% static 'images/low_appliance.jpeg' %}" alt="low_appliance">
+                <p class="second-text">Low</p>
+            </label>
+        </div>
+        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+
+    </div>
+
+    <div class="question-container" id="question-4" style="display: none;">
+        <h1>How would you rate your insulation?</h1>
+        <div class="cards">
+           
+            <label class="card" for="Poor" onclick="selectCard(this)">
+                <input type="radio" name="insulation_quality" value="Poor" id="Poor">
+                <img src="{% static 'images/low_insluation.jpeg' %}" alt="insulation">
+                <p class="second-text">Low</p>
+            </label>
+
+            <label class="card" for="Good" onclick="selectCard(this)">
+                <input type="radio" name="insulation_quality" value="Good" id="Good">
+                <img src="{% static 'images/good_in.jpeg' %}" alt="insulation">
+                <p class="second-text">Good</p>
+            </label>
+        </div>
+        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+
+    </div>
+    <div class="question-container" id="question-5" style="display: none;">
+        <h1>s renewable energy integration feasible for your house?</h1>
+        <div class="cards">
+           
+            <label class="card" for="yes" onclick="selectCard(this)">
+                <input type="radio" name="renewable" value="yes" id="yes">
+                <img src="{% static 'images/renewble_yes.jpeg' %}" alt="insulation">
+                <p class="second-text">yes</p>
+            </label>
+
+            <label class="card" for="no" onclick="selectCard(this)">
+                <input type="radio" name="renewable" value="no" id="no">
+                <img src="{% static 'images/renewble_no.jpeg' %}" alt="no">
+                <p class="second-text">No</p>
+            </label>
+        </div>
+        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+
+    </div>
+
+    
+    <div class="question-container" id="question-6" style="display: none;">
+        <h1>Is a smart home system feasible for your house?</h1>
+        <div class="cards">
+           
+            <label class="card" for="yes" onclick="selectCard(this)">
+                <input type="radio" name="smart_home" value="yes" id="yes">
+                <img src="{% static 'images/smart.jpeg' %}" alt="insulation">
+                <p class="second-text">yes</p>
+            </label>
+
+            <label class="card" for="no" onclick="selectCard(this)">
+                <input type="radio" name="smart_home" value="no" id="no">
+                <img src="{% static 'images/not_smart.jpeg' %}" alt="no">
+                <p class="second-text">No</p>
+            </label>
+        </div>
+        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+
+    </div>
+    <div class="question-container" id="question-7" style="display: none;">
+        <h1>Is regular maintenance needed?</h1>
+        <div class="cards">
+           
+            <label class="card" for="yes" onclick="selectCard(this)">
+                <input type="radio" name="maintenance" value="yes" id="yes">
+                <img src="{% static 'images/main_need.jpeg' %}" alt="maintenance">
+                <p class="second-text">yes</p>
+            </label>
+
+            <label class="card" for="no" onclick="selectCard(this)">
+                <input type="radio" name="maintenance" value="no" id="no">
+                <img src="{% static 'images/main_no.jpeg' %}" alt="maintenance">
+                <p class="second-text">No</p>
+            </label>
+        </div>
+        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+
+    </div>
+
+    <div class="question-container" id="question-8" style="display: none;">
+        <h1>Do you have any unoccupied rooms?</h1>
+        <div class="cards">
+           
+            <label class="card" for="yes" onclick="selectCard(this)">
+                <input type="radio" name="unoccupied" value="yes" id="yes">
+                <img src="{% static 'images/unoc.jpeg' %}" alt="unoccupied">
+                <p class="second-text">yes</p>
+            </label>
+
+            <label class="card" for="no" onclick="selectCard(this)">
+                <input type="radio" name="unoccupied" value="no" id="no">
+                <img src="{% static 'images/occu.jpeg' %}" alt="unoccupied">
+                <p class="second-text">No</p>
+            </label>
+        </div>
+        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+
+    </div>
+    <div class="question-container" id="question-9" style="display: none;">
+        <h1>How do you rate your HVAC system?</h1>
+        <div class="cards">
+           
+            <label class="card" for="old" onclick="selectCard(this)">
+                <input type="radio" name="HVAC" value="old" id="old">
+                <img src="{% static 'images/old_HVAC.jpeg' %}" alt="insulation">
+                <p class="second-text">Old</p>
+            </label>
+
+            <label class="card" for="new" onclick="selectCard(this)">
+                <input type="radio" name="HVAC" value="new" id="new">
+                <img src="{% static 'images/new_HVAC.jpeg' %}" alt="new">
+                <p class="second-text">New</p>
+            </label>
+        </div>
+        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+
+    </div>
+    <div class="question-container" id="question-10" style="display: none;">
+        <h1>What type of windows do you have? (most) </h1>
+        <div class="cards">
+           
+            <label class="card" for="single" onclick="selectCard(this)">
+                <input type="radio" name="windows" value="single" id="single">
+                <img src="{% static 'images/single.jpeg' %}" alt="single">
+                <p class="second-text">Single</p>
+            </label>
+
+            <label class="card" for="double" onclick="selectCard(this)">
+                <input type="radio" name="windows" value="double" id="double">
+                <img src="{% static 'images/double.jpeg' %}" alt="Double">
+                <p class="second-text">Double</p>
+            </label>
+        </div>
+        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+
+    </div>
+    <div class="question-container" id="question-11" style="display: none;">
+        <h1>How do you rate the meteo aroud your house ?</h1>
+        <div class="cards">
+           
+            <label class="card" for="Hot" onclick="selectCard(this)">
+                <input type="radio" name="Temperature" value="High" id="Hot">
+                <img src="{% static 'images/hot.jpeg' %}" alt="Hot">
+                <p class="second-text">Hot</p>
+            </label>
+            <label class="card" for="Moderate" onclick="selectCard(this)">
+                <input type="radio" name="Temperature" value="Moderate" id="Moderate">
+                <img src="{% static 'images/moderate.jpeg' %}" alt="Moderate">
+                <p class="second-text">Moderate</p>
+            </label>
+            <label class="card" for="Cold" onclick="selectCard(this)">
+                <input type="radio" name="Temperature" value="Low" id="Cold">
+                <img src="{% static 'images/cold.jpeg' %}" alt="Cold">
+                <p class="second-text">Cold</p>
+            </label>
+        </div>
+        <button class="next-btn" style="display: none;">Next</button>        <div class="cont">
+            <button class="next-btn" style="display: none;">Next</button>
+        </div>
+    </div>
+
+    <button id="get-recommendations-btn" style="display: none;" type="submit" value="Get Recommendations"> 
+</form>
+
+    {% if result %}
+    <div id="result" style="display: none;">
+    <h2>Recommendations</h2>
+    <ul>
+        {% for item in result %}
+        <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    let selectedValue = null;
+    let currentQuestionIndex = 0;
+
+    function selectCard(selectedCard) {
+        const currentQuestion = selectedCard.closest('.question-container');
+        currentQuestion.querySelectorAll('.card').forEach(card => {
+            card.classList.remove('selected');
+        });
+        selectedCard.classList.add('selected');
+        selectedValue = selectedCard.querySelector('input[type="radio"]').value;
+        checkNextButton(currentQuestion);
+    }
+
+    function checkNextButton(question) {
+        const nextBtn = question.querySelector('.next-btn');
+        if (nextBtn && selectedValue) {
+            nextBtn.style.display = 'block';
+        }
+    }
+
+    $(document).ready(function() {
+        // Hide the "Get Recommendations" button initially
+        $("#get-recommendations-btn").hide();
+
+        $(".next-btn").click(function(event) {
+            event.preventDefault();
+            $(".question-container").eq(currentQuestionIndex).hide();
+            currentQuestionIndex++;
+            const nextQuestion = $(".question-container").eq(currentQuestionIndex);
+            if (nextQuestion.length > 0) {
+                nextQuestion.show();
+            } else {
+                $("#get-recommendations-btn").show();
+            }
+        });
+
+        $("#get-recommendations-btn").click(function(event) {
+            event.preventDefault();
+            $(this).hide();
+            $("#result").show();
+        });
+    });
+</script>
+
+</body>
+</html>

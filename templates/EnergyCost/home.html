@@ -1,11 +1,258 @@
+
+        <!-- position (to get the Temperature )
+        Uses_incandescent_bulbs
+        Insulation(house, Poor)
+        Efficiency_appliances(house, Low)
+        Pane_windows(house, Single)
+        Old_HVAC_system(house)
+        Feasible_renewable_integration
+        Smart_home_feasible
+        Number_of_rooms
+        Maintenance_needed
+        Unoccupied_room(house) -->
+
+{%load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Energy Efficiency Diagnostic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .option-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .option input[type="radio"] {
+            display: none;
+        }
+        .option label {
+            cursor: pointer;
+        }
+        .option img {
+            width: 150px; /* Adjust size as needed */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+        .option input[type="radio"]:checked + label img {
+            transform: scale(1.1); /* Zoom effect on selection */
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello world</h1>
+    <div class="container">
+        <h1>Welcome to Energy Efficiency Diagnostics</h1>
+        <form action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+            <div class="option-container">
+                <label for="rooms">How many rooms do you have in your house?</label>
+                <input type="number" id="rooms" name="rooms" min="1" max="10" required>
+            </div>
+            <label for="">What do you Use mostly in your house</label>
+            <div class="option-container">
+                <div class="option">
+                    <input type="radio" id="incandescent" name="lighting" value="incandescent" required>
+                    <label for="incandescent">
+                        <img src="{% static 'images/images.jpeg' %}" alt="Incandescent Bulbs">
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="led" name="lighting" value="led" required>
+                    <label for="led">
+                        <img src="{% static 'images/images.jpeg' %}" alt="LED Bulbs">
+                    </label>
+                </div>
+            </div>
+            <label for="">Please enter your position</label>
+            <div class="option-container">
+                <input type="text" name="position" id="position">
+            </div>
+            <label for="insulation">How would you rate your insulation?</label>
+            <div class="option-container">
+                <select id="insulation" name="insulation" required>
+                    <option value="">Select</option>
+                    <option value="poor">Poor</option>
+                    <option value="average">Average</option>
+                    <option value="good">Good</option>
+                </select>
+            </div>
+            <label>How efficient are your appliances?</label>
+            <div class="option-container">
+                <select id="appliances" name="appliances" required>
+                <option value="">Select</option>
+                <option value="low">Low Efficiency</option>
+                <option value="average">Average Efficiency</option>
+                <option value="high">High Efficiency</option>
+            </select></div>
+            <label>What type of windows do you have?</label>
+               <div class="option-container">
+                <input type="radio" id="single_pane" name="windows" value="single">
+                <label for="single_pane">Single Pane</label>
+                <input type="radio" id="double_pane" name="windows" value="double">
+                <label for="double_pane">Double Pane</label>
+                </div>      
+                
+                <label>How do you rate your HVAC system</label>             
+                <div class="option-container">
+
+                    <input type="radio" id="HVAC_old" name="HVAC" value="old">
+                    <label for="HVAC_old">Old relatively</label>
+                    <input type="radio" id="HVAC_new" name="HVAC" value="new">
+                    <label for="HVAC_new">New relatively</label>
+                </div>
+
+            <label>Is renewable energy integration feasible for your house?</label>
+            <div class="option-container">
+                <input type="radio" id="yes" value="yes" name="renewable">
+                <label for="yes">Yes</label>
+                <input type="radio" id="no" value="no" name="renewable">
+                <label for="no">No</label>
+            </div>
+
+            <label>Is a smart home system feasible for your house?</label>
+            <div class="option-container">
+                <input type="radio" id="yes_smart" value="yes" name="smart_home">
+                <label for="yes_smart">Yes</label>
+                <input type="radio" id="no_smart" value="no" name="smart_home">
+                <label for="no_smart">No</label>
+            </div>
+
+            <label>Is regular maintenance needed?</label>
+            <div class="option-container">
+                <input type="radio" id="maintenance_yes" value="yes" name="maintenance">
+                <label for="maintenance_yes">Yes</label>
+                <input type="radio" id="maintenance_no" value="no" name="maintenance">
+                <label for="maintenance_no">No</label>
+            </div>
+
+            <label>Do you have any unoccupied rooms?</label>
+
+            <div class="option-container">
+                <input type="radio" id="unoccupied_yes" value="yes" name="unoccupied">
+                <label for="unoccupied_yes">Yes</label>
+                <input type="radio" id="unoccupied_no" value="no" name="unoccupied">
+                <label for="unoccupied_no">No</label>
+            </div>
+
+            <button type="submit">Get Recommendations</button>
+        </form>
+        {% if result %}
+    <div class="result-container">
+    <h2>Recommendations</h2>
+    <ul>
+        {% for item in result %}
+        <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+    </div>
 </body>
 </html>
+
+
+<!-- </head>
+<body>
+    <div class="container">
+        <h1>Welcome to Energy Efficiency Diagnostics</h1>
+        <form action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+            <label for="rooms">How many rooms do you have in your house?</label>
+            <input type="number" id="rooms" name="rooms" min="1" max="10" required>
+
+            <label>Do you use incandescent bulbs?</label>
+            <input type="checkbox" id="incandescent" name="incandescent">
+            <label for="incandescent">Yes, I use incandescent bulbs</label>
+
+            <label for="insulation">How would you rate your insulation?</label>
+            <select id="insulation" name="insulation" required>
+                <option value="">Select</option>
+                <option value="poor">Poor</option>
+                <option value="average">Average</option>
+                <option value="good">Good</option>
+            </select>
+
+            <label>How efficient are your appliances?</label>
+            <select id="appliances" name="appliances" required>
+                <option value="">Select</option>
+                <option value="low">Low Efficiency</option>
+                <option value="average">Average Efficiency</option>
+                <option value="high">High Efficiency</option>
+            </select>
+
+            <label>What type of windows do you have?</label>
+            <input type="radio" id="single_pane" name="windows" value="single">
+            <label for="single_pane">Single Pane</label>
+            <input type="radio" id="double_pane" name="windows" value="double">
+            <label for="double_pane">Double Pane</label>
+
+            <label>Is your HVAC system old?</label>
+            <input type="checkbox" id="old_hvac" name="old_hvac">
+            <label for="old_hvac">Yes, my HVAC system is old</label>
+
+            <label>Is renewable energy integration feasible for your house?</label>
+            <input type="checkbox" id="renewable" name="renewable">
+
+            <label>Is a smart home system feasible for your house?</label>
+            <input type="checkbox" id="smart_home" name="smart_home">
+
+            <label>Is regular maintenance needed?</label>
+            <input type="checkbox" id="maintenance" name="maintenance">
+
+            <label>Do you have any unoccupied rooms?</label>
+            <input type="checkbox" id="unoccupied" name="unoccupied">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html> -->
