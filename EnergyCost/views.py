@@ -3,6 +3,7 @@ from aima.logic import FolKB
 from .main import get_recommendations, impliment_facts
 
 def home(request):
+<<<<<<< HEAD
     result = {}
     if request.method == 'POST':
         kb = FolKB()
@@ -58,3 +59,9 @@ def home(request):
         print(result)
 
     return render(request, 'EnergyCost/home2.html', {'result': result})
+=======
+    context = {}
+    hello = 'hello'
+    
+    return render(request,'EnergyCost/home.html' , context=context)
+>>>>>>> 717a84a44be726da3a74c56493ab02770d10600e
