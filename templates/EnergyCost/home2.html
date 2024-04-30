@@ -111,19 +111,19 @@
        <div class="question-container" id="question-1">
         <h1>How many rooms do you have in your house?</h1>
         <div class="cards">
-            <!-- Red card represents "Few" -->
+
             <label class="card" for="few" onclick="selectCard(this)">
                 <input type="radio" name="num_rooms" value="2" id="few">
                 <img src="{% static 'images/few.jpeg' %}" alt="Few Rooms">
                 <p class="second-text">1-3</p>
             </label>
-            <!-- Blue card represents "Enough" -->
+
             <label class="card" for="enough" onclick="selectCard(this)">
                 <input type="radio" name="num_rooms" value="4" id="enough">
                 <img src="{% static 'images/enough.jpeg' %}" alt="Enough Rooms">
                 <p class="second-text">4-5</p>
             </label>
-            <!-- Green card represents "Many" -->
+
             <label class="card" for="many" onclick="selectCard(this)">
                 <input type="radio" name="num_rooms" value="8" id="many">
                 <img src="{% static 'images/many.jpeg' %}" alt="Many Rooms">
@@ -140,13 +140,12 @@
     <div class="question-container" id="question-2" style="display: none;">
         <h1>What type of lighting do you use mostly?</h1>
         <div class="cards">
-            <!-- Red card represents "Incandescent" -->
             <label class="card" for="Incandescent" onclick="selectCard(this)">
                 <input type="radio" name="lighting" value="incandescent" id="Incandescent">
                 <img src="{% static 'images/incandescent.jpeg' %}" alt="Incandescent Bulbs">
                 <p class="second-text">Incandescent</p>
             </label>
-            <!-- Blue card represents "LED" -->
+
             <label class="card" for="LED" onclick="selectCard(this)">
                 <input type="radio" name="lighting" value="LED" id="LED">
                 <img src="{% static 'images/led.jpeg' %}" alt="LED Bulbs">
@@ -350,16 +349,17 @@
                 <p class="second-text">Cold</p>
             </label>
         </div>
-        <button class="next-btn" style="display: none;">Next</button>        <div class="cont">
+       
+        <div class="cont">
             <button class="next-btn" style="display: none;">Next</button>
         </div>
     </div>
 
-    <button id="get-recommendations-btn" style="display: none;" type="submit" value="Get Recommendations"> 
+    <input type="submit" value="Get Recommendations" id="get-recommendations-btn" style="display: block;">
 </form>
 
     {% if result %}
-    <div id="result" style="display: none;">
+    <div id="result" style="display: block;">
     <h2>Recommendations</h2>
     <ul>
         {% for item in result %}
@@ -408,11 +408,7 @@
             }
         });
 
-        $("#get-recommendations-btn").click(function(event) {
-            event.preventDefault();
-            $(this).hide();
-            $("#result").show();
-        });
+
     });
 </script>
 

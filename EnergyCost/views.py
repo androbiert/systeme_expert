@@ -55,7 +55,6 @@ def home(request):
         impliment_facts(kb=kb,facts=facts)
         result = get_recommendations(kb=kb)
         
-        print(result)
 
     return render(request, 'EnergyCost/home2.html', {'result': result})
 
