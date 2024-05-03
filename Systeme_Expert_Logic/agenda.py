@@ -14,7 +14,7 @@ def contain(expr,word):
                 return True
     return False
         
-hey = 'hey'
+
 
 def forward_chaining_with_suggestions(kb):
     inferred = set()
@@ -43,7 +43,6 @@ def forward_chaining_with_suggestions(kb):
 
 # Example usage
 kb = FolKB()
-# Add rules to kb here
 
 kb.tell(expr('House(House)'))
 kb.tell(expr('Uses_incandescent_bulbs(House)'))

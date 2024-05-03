@@ -3,12 +3,10 @@ from aima.logic import  expr, fol_fc_ask,FolKB
 
 def impliment_facts(kb,facts):
     implement_rules(kb)
-    # Add new facts to the knowledge base
     for fact in facts:
         kb.tell(expr(f'{fact}'))
 
 
-# Add more rules as needed
 
 """
     The first Problem was that the unification between the suggestions rules :like this 
@@ -118,11 +116,9 @@ def get_recommendations(kb):
         result = fol_fc_ask(kb, expr(f'{suggestion}(house)'))
         if len(list(result)) > 0:
             memory[suggestion] = True
-        # else:
-        #     memory[suggestion] = False
     return memory
 
-# Print out inferred suggestions
+
 
 # Read and display suggestion steps from the text file
 def display_suggestion_steps(suggestion):
@@ -183,11 +179,3 @@ def get_final(recommendations):
     return filtered_suggestions_data
 
 
-# Create a dictionary for only the suggestions in suggestions_list
-
-# print(filtered_suggestions_data)
-# # Print the filtered suggestions data
-# for suggestion, steps in filtered_suggestions_data.items():
-#     print(f"Suggestion: {suggestion}")
-#     for step in steps:
-#         print(f"  - {step}")

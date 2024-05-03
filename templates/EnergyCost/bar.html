@@ -122,12 +122,12 @@
       text-align: justify;
     }
 
-    /* Cool styling */
+
 
     p .highlight {
       font-size: 20px;
       font-weight: bold;
-      color: #fde403; /* Orange color */
+      color: #fde403; 
     }
     .suggestions-container {
       position: relative;
@@ -144,12 +144,12 @@
       margin-bottom: 10px;
       padding: 10px;
       transition: all 0.5s ease-in;
-      overflow: hidden; /* Hide overflowing content */
+      overflow: hidden; 
     }
     .suggestion-item:hover {
       background-color: #76ecfcde;
       color: rgb(73, 73, 73);
-      height: auto; /* Allow item to expand */
+      height: auto; 
 
     }
    li{
@@ -160,10 +160,10 @@
       color: #333;
     }
     .suggestion-item:hover .suggestion-steps {
-      max-height: 1000px; /* Expand steps when parent is hovered */
+      max-height: 1000px; 
     }
     .suggestion-steps {
-      max-height: 0; /* Initially hide the steps */
+      max-height: 0; 
       overflow: hidden;
       list-style-type:lower-roman;
       transition: max-height 0.3s ease-in;
@@ -177,7 +177,7 @@
   <div class="containerr" >
     {% if result %}
     <div class="suggestions-container">
-      <!-- Render the suggestions data into HTML -->
+
       {% for suggestion_title, steps in result.items %}
       <div class="suggestion-item">
         <h3>Suggestion: {{ suggestion_title }}</h3>
@@ -210,7 +210,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
         <p><span id="auto"></span></p>
         
-        <!-- Add JavaScript code to create the typing animation -->
+
+        
         <script>
             var typed = new Typed('#auto', {
                 strings: ["📺 Programmable thermostats adjust for efficiency.",

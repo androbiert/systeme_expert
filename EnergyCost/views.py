@@ -57,13 +57,9 @@ def input_process(request):
         if unoccupied == 'yes':
             facts.append('Unoccupied_room(House)')
 
-        print(request.POST)  # Debugging to see what data is received
-
-        # Update knowledge base based on user input
         impliment_facts(kb=kb,facts=facts)
         recommendations = get_recommendations(kb=kb)
         result = get_final(recommendations=recommendations)
-        print(result)
         return result
     return None
 

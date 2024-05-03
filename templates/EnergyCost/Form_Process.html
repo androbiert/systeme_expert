@@ -86,10 +86,10 @@
             transition:  0.3s ease;
         }
 
-        /* Style the selected card */
+
         .card.selected {
             border-color: #22669ade; /* Green border for selected */
-            background-color: #4282b3de; /* Change background color when selected */
+            background-color: #4282b3de; 
         }
         .cont{
             width: 100%;
@@ -106,9 +106,7 @@
             background-color: #1e6091;
 
         }
-        /* Add styles for the progress text */
 
-        /* Add styles for the progress container and bar */
         .progress-container {
             width: 100%;
             height: 30px;
@@ -503,11 +501,11 @@
             $(".question-container").eq(currentQuestionIndex).hide();
             currentQuestionIndex++;
 
-            // Calculate progress bar width based on question count
+
             progressBarWidth = Math.floor(((currentQuestionIndex + 1) / questionCount) * 100);
             $("#progress-bar").css("width", progressBarWidth + "%");
             
-            // Update progress text
+
             $(".progress-text").text(progressBarWidth + "% completed");
 
             const nextQuestion = $(".question-container").eq(currentQuestionIndex);
@@ -520,7 +518,7 @@
             }
         });
 
-        // Initial progress text setup
+
         $(".progress-text").text("0% completed");
         function animateProcessingMessages(messages) {
             const processingDiv = $("#processing-messages");
