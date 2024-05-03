@@ -107,8 +107,8 @@ suggestions.extend(['Suggest_upgrade_insulation','Suggest_upgrade_HVAC_system','
                     'Suggest_integrate_renewable_energy', 'Suggest_switch_to_LED',
                      'Suggest_implement_smart_home',
                       'Suggest_energy_efficient_windows', 'Suggest_regular_maintenance',
-                     'Suggest_energy_savings', 'Suggest_cost_savings',
-                     'Suggest_regular_maintenance', 'Suggest_integrate_heating_systems',
+                     'Suggest_energy_savings', 
+                     'Suggest_integrate_heating_systems',
                      'Suggest_integrate_cooling_methods','Suggest_Optimize_energy_usage'])
 
 # Run forward chaining to infer suggestions

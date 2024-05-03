@@ -95,8 +95,8 @@
     }
 
     #auto {
-      font-size: 30px; /* Bigger font size */
-      color: #fff; /* White color */
+      font-size: 30px; 
+      color: #fff;
       margin-top: 20px;
     }
 
@@ -139,20 +139,34 @@
     }
   
     .suggestion-item {
-      background-color: #f4f4f4;
+      background-color: #f4f4f4b6;
       border-radius: 8px;
       margin-bottom: 10px;
       padding: 10px;
+      transition: all 0.5s ease-in;
+      overflow: hidden; /* Hide overflowing content */
     }
-  
+    .suggestion-item:hover {
+      background-color: #76ecfcde;
+      color: rgb(73, 73, 73);
+      height: auto; /* Allow item to expand */
+
+    }
+   li{
+    text-decoration: none;
+   }
     .suggestion-item h3 {
       margin-bottom: 5px;
       color: #333;
     }
-  
+    .suggestion-item:hover .suggestion-steps {
+      max-height: 1000px; /* Expand steps when parent is hovered */
+    }
     .suggestion-steps {
-      margin-left: 20px;
-      list-style-type: disc;
+      max-height: 0; /* Initially hide the steps */
+      overflow: hidden;
+      list-style-type:lower-roman;
+      transition: max-height 0.3s ease-in;
     }
 
   </style>
@@ -163,9 +177,19 @@
   <div class="containerr" >
     {% if result %}
     <div class="suggestions-container">
-
-        
+      <!-- Render the suggestions data into HTML -->
+      {% for suggestion_title, steps in result.items %}
+      <div class="suggestion-item">
+        <h3>Suggestion: {{ suggestion_title }}</h3>
+        <ul class="suggestion-steps">
+          {% for step in steps %}
+          <li>{{ step }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
     </div>
+
     <a href="{% url 'home' %}"><button id="try-again-btn">Try Again</button></a>
     {% else %}
     <style>
@@ -177,7 +201,7 @@
         <h1>Welcome to the Energy Efficiency Expert</h1>
         <div class="description">
           <p>
-            As an Energy Efficiency House System Expert, you are the <span class="highlight">innovative steward of sustainable living</span>. Your role blends <span class="highlight">cutting-edge technology</span> with <span class="highlight">environmental consciousness</span> to create <span class="highlight">smart solutions</span> for modern homes. From optimizing heating and cooling systems to integrating renewable energy sources, your expertise <span class="highlight">empowers homeowners</span> to save energy, reduce costs, and <span class="highlight">minimize environmental impact</span>.
+            As an Energy Efficiency House System Expert, I am the <span class="highlight">innovative steward of sustainable living</span>. My role blends <span class="highlight">cutting-edge technology</span> with <span class="highlight">environmental consciousness</span> to create <span class="highlight">smart solutions</span> for modern homes. From optimizing heating and cooling systems to integrating renewable energy sources, My expertise <span class="highlight">empowers homeowners</span> to save energy, reduce costs, and <span class="highlight">minimize environmental impact</span>.
           </p>
         </div>
       </div>
@@ -213,43 +237,7 @@
     {% endif %}
   </div>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Function to display suggestions
-      function displaySuggestions(suggestionsData) {
-        const suggestionsContainer = document.querySelector('.suggestions-container');
-    
-        // Clear previous content
-        suggestionsContainer.innerHTML = '';
-    
-        // Create and append elements for each suggestion
-        Object.entries(suggestionsData).forEach(([suggestionTitle, steps], index) => {
-          const suggestionDiv = document.createElement('div');
-          suggestionDiv.classList.add('suggestion-item');
-    
-          const suggestionTitleElement = document.createElement('h3');
-          suggestionTitleElement.textContent = `Suggestion ${index + 1}: ${suggestionTitle}`;
-    
-          const suggestionSteps = document.createElement('ul');
-          suggestionSteps.classList.add('suggestion-steps');
-          steps.forEach(step => {
-            const stepItem = document.createElement('li');
-            stepItem.textContent = step;
-            suggestionSteps.appendChild(stepItem);
-          });
-    
-          suggestionDiv.appendChild(suggestionTitleElement);
-          suggestionDiv.appendChild(suggestionSteps);
-    
-          suggestionsContainer.appendChild(suggestionDiv);
-        });
-      }
-    
-      // Example usage with dummy data (replace with actual data from the backend)
-      const suggestionsData = {'Suggest_upgrade_HVAC_system': ['', '1. Assessment and Research', '- Evaluate Current HVAC System', '- Identify Needs and Goals', '- Research HVAC Options', '', '2. Consultation and Planning', '- Consult HVAC Professionals', '- Obtain Multiple Quotes', '- Consider Energy Efficiency', '', '3. Upgrade and Maintenance', '- Schedule Installation', '- Perform Upgrades', '- Regular Maintenance', '', '4. Monitoring and Optimization', '- Monitor Performance', '- Optimize Settings', '- Consider Renewable Integration'], 'Suggest_integrate_renewable_energy': [], 'Suggest_switch_to_LED': [], 'Suggest_energy_savings': [], 'Suggest_integrate_cooling_methods': [], 'Suggest_Optimize_energy_usage': []} ; 
-      
-      // Call the function to display suggestions
-      displaySuggestions(suggestionsData);
-    });
+
     
   </script>
   
