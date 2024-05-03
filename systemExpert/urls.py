@@ -6,6 +6,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('EnergyCost.urls')),
+    
 ]
 
 # Serve static and media files during development

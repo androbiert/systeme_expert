@@ -134,24 +134,60 @@ def display_suggestion_steps(suggestion):
             line = line.strip()
             if line == f"Suggestion: {suggestion}":
                 found_suggestion = True
-                result += f"\n{suggestion} Steps:"
+                
             elif line.startswith('Suggestion: '):
                 found_suggestion = False
                 continue
             elif found_suggestion and line:
-                result += f"  - {line}\n"
+                result += f"   {line}\n"
     return result
 
 
-def get_steps(kb):
-    memory = get_recommendations(kb=kb)
-    result = ''
-    for suggestion, inferred in memory.items():
+def get_steps(recommendations):
+   
+    result = []
+    for suggestion, inferred in recommendations.items():
         if inferred:
-            result += display_suggestion_steps(suggestion)
+            result.append(display_suggestion_steps(suggestion)) 
     return result
 
 
+def parse_suggestions_file(file_name):
+    suggestions_data = {}
+    with open(file_name, 'r') as file:
+        suggestion_title = None
+        steps = []
+        for line in file:
+            line = line.strip()
+            if line.startswith('Suggestion: '):
+                if suggestion_title is not None:
+                    suggestions_data[suggestion_title] = steps
+                suggestion_title = line.split('Suggestion: ')[1]
+                print("i am sug title" + suggestion_title)
+                steps = []
+            elif line.startswith('Steps to '):
+                print("i am in steps of "+suggestion_title)
+                continue
+            else:
+
+                steps.append(line.strip())
+        if suggestion_title is not None and steps:
+            suggestions_data[suggestion_title] = steps
+    return suggestions_data
+
+# Example usage
+file_name = 'suggestion_steps.txt'
+def get_final(recommendations):
+    suggestions_data = parse_suggestions_file(file_name)
+    filtered_suggestions_data = {suggestion: suggestions_data.get(suggestion, []) for suggestion in recommendations}
+    return filtered_suggestions_data
 
 
-    
+# Create a dictionary for only the suggestions in suggestions_list
+
+# print(filtered_suggestions_data)
+# # Print the filtered suggestions data
+# for suggestion, steps in filtered_suggestions_data.items():
+#     print(f"Suggestion: {suggestion}")
+#     for step in steps:
+#         print(f"  - {step}")

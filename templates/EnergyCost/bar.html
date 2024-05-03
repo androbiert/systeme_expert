@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8" />
+  <title>energy-efficient</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+  <!-- Demo styles -->
+  <style>
+    html,
+    body {
+      position: relative;
+      height: 100%;
+      padding: 1rem 0 0 0;
+    }
+
+    body {
+      background-image: url('../../static/images/bac.jpeg') ;
+      background-repeat: no-repeat ;
+      font-family: cursive, sans-serif;
+      background-size: cover; /* Cover the entire background */
+      background-position: center; /* Center the background image */
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .containerr {
+      width: 60%;
+      height: 100%;
+      position: absolute;
+      right: 10px;
+      overflow: scroll;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+    }
+
+    .header-section {
+      background-color: #3188c2e6;
+      padding-bottom: 0 5px 5px 5px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      position: absolute;
+      top: 20px;
+
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: all 0.5s ease;
+      width: 95%;
+    }
+
+    .header-section:hover {
+      height: 42%;
+      transition: all 0.5s ease-in; /* Only transition height */
+    }
+    
+    .header-section h1 {
+      margin-top: 5px;
+      font-size: 30px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .header-section:hover h1 {
+      border-bottom: 2px solid #fff;
+      padding-bottom: 5px;
+    }
+
+    .description {
+      visibility: hidden;
+      padding: 0 10px;
+      font-size: 1.5rem;
+      color: #fff;
+      opacity: 0;
+      transition: visibility 0s ease, opacity 0.5s ease-in;
+    }
+
+    .header-section:hover .description {
+      visibility: visible;
+      opacity: 1;
+      transition-delay: 0.3s; /* Delay the transition */
+    }
+    
+    .header-section:hover .description p {
+      transition: visibility 0s ease-in 0.2s;
+    }
+    .header-section:not(:hover) {
+      height:10%; /* return to the original height */
+    }
+
+    #auto {
+      font-size: 30px; /* Bigger font size */
+      color: #fff; /* White color */
+      margin-top: 20px;
+    }
+
+    #get-started-btn {
+
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 200px;
+      transition: background-color 0.3s ease;
+
+    }
+
+
+    #get-started img {
+      width: 150px;
+      height: 180px;
+
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    /* Cool styling */
+
+    p .highlight {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fde403; /* Orange color */
+    }
+    .suggestions-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      z-index: 20;
+      
+      margin: 20px;
+    }
+  
+    .suggestion-item {
+      background-color: #f4f4f4;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+  
+    .suggestion-item h3 {
+      margin-bottom: 5px;
+      color: #333;
+    }
+  
+    .suggestion-steps {
+      margin-left: 20px;
+      list-style-type: disc;
+    }
+
+  </style>
+  
+</head>
+
+<body>
+  <div class="containerr" >
+    {% if result %}
+    <div class="suggestions-container">
+
+        
+    </div>
+    <a href="{% url 'home' %}"><button id="try-again-btn">Try Again</button></a>
+    {% else %}
+    <style>
+      .containerr{
+        justify-content: center;
+      }
+    </style>
+      <div class="header-section">
+        <h1>Welcome to the Energy Efficiency Expert</h1>
+        <div class="description">
+          <p>
+            As an Energy Efficiency House System Expert, you are the <span class="highlight">innovative steward of sustainable living</span>. Your role blends <span class="highlight">cutting-edge technology</span> with <span class="highlight">environmental consciousness</span> to create <span class="highlight">smart solutions</span> for modern homes. From optimizing heating and cooling systems to integrating renewable energy sources, your expertise <span class="highlight">empowers homeowners</span> to save energy, reduce costs, and <span class="highlight">minimize environmental impact</span>.
+          </p>
+        </div>
+      </div>
+
+      <div class="content">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+        <p><span id="auto"></span></p>
+        
+        <!-- Add JavaScript code to create the typing animation -->
+        <script>
+            var typed = new Typed('#auto', {
+                strings: ["📺 Programmable thermostats adjust for efficiency.",
+                "💪 Unplug electronics to reduce standby power.",
+                '🌞 Solar panels: sustainable energy, lower bills.',
+                "🕯️ Use natural light to reduce lighting needs.",
+                "🔥❄️ Regular HVAC maintenance ensures efficiency.",
+                '🪟 Upgrade to energy-efficient windows for savings.',
+                "🤑 Cold water laundry saves energy and money.",
+                "💧 Insulate hot water pipes for efficiency.",
+                "🌳 Plant shade trees for natural cooling.",
+                "♻️ Recycle old appliances for eco-friendly choices."
+                
+                ],
+                typeSpeed: 40,
+                backSpeed: 1,
+                loop: true
+            });
+        </script>
+      </div>
+      <a href="{% url 'input_process' %}">
+            <img src="{% static 'images/gett.png' %}" alt="" style="width: 300px;">
+      </a>
+    {% endif %}
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Function to display suggestions
+      function displaySuggestions(suggestionsData) {
+        const suggestionsContainer = document.querySelector('.suggestions-container');
+    
+        // Clear previous content
+        suggestionsContainer.innerHTML = '';
+    
+        // Create and append elements for each suggestion
+        Object.entries(suggestionsData).forEach(([suggestionTitle, steps], index) => {
+          const suggestionDiv = document.createElement('div');
+          suggestionDiv.classList.add('suggestion-item');
+    
+          const suggestionTitleElement = document.createElement('h3');
+          suggestionTitleElement.textContent = `Suggestion ${index + 1}: ${suggestionTitle}`;
+    
+          const suggestionSteps = document.createElement('ul');
+          suggestionSteps.classList.add('suggestion-steps');
+          steps.forEach(step => {
+            const stepItem = document.createElement('li');
+            stepItem.textContent = step;
+            suggestionSteps.appendChild(stepItem);
+          });
+    
+          suggestionDiv.appendChild(suggestionTitleElement);
+          suggestionDiv.appendChild(suggestionSteps);
+    
+          suggestionsContainer.appendChild(suggestionDiv);
+        });
+      }
+    
+      // Example usage with dummy data (replace with actual data from the backend)
+      const suggestionsData = {'Suggest_upgrade_HVAC_system': ['', '1. Assessment and Research', '- Evaluate Current HVAC System', '- Identify Needs and Goals', '- Research HVAC Options', '', '2. Consultation and Planning', '- Consult HVAC Professionals', '- Obtain Multiple Quotes', '- Consider Energy Efficiency', '', '3. Upgrade and Maintenance', '- Schedule Installation', '- Perform Upgrades', '- Regular Maintenance', '', '4. Monitoring and Optimization', '- Monitor Performance', '- Optimize Settings', '- Consider Renewable Integration'], 'Suggest_integrate_renewable_energy': [], 'Suggest_switch_to_LED': [], 'Suggest_energy_savings': [], 'Suggest_integrate_cooling_methods': [], 'Suggest_Optimize_energy_usage': []} ; 
+      
+      // Call the function to display suggestions
+      displaySuggestions(suggestionsData);
+    });
+    
+  </script>
+  
+</body>
+</html>

@@ -5,13 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Energy Efficiency Diagnostic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+
             background-color: #f0f0f0;
             color: #333;
             margin: 0;
             padding: 0;
+            font-family: cursive; /* Use the Google Font 'Roboto' */
+            font-size: 16px; /* Adjust font size as needed */
+            font-weight: 700; /* Use a bold font weight */
+
         }
         .container {
             max-width: 800px;
@@ -83,8 +88,8 @@
 
         /* Style the selected card */
         .card.selected {
-            border-color: #4CAF50; /* Green border for selected */
-            background-color: #7ed181; /* Change background color when selected */
+            border-color: #22669ade; /* Green border for selected */
+            background-color: #4282b3de; /* Change background color when selected */
         }
         .cont{
             width: 100%;
@@ -98,9 +103,75 @@
             border: none;
             border-radius: 20px;
             padding: 5px;
-            background-color: #7ed181;
+            background-color: #1e6091;
 
         }
+        /* Add styles for the progress text */
+
+        /* Add styles for the progress container and bar */
+        .progress-container {
+            width: 100%;
+            height: 30px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #1e6091;
+            width: 0;
+            transition: width 0.3s ease;
+            border-radius: 5px;
+        }
+        /* Styles for processing messages */
+        .processing-message {
+            font-family: cursive, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+            margin: 10px 0;
+            transition: 0.5s ease ;
+        }
+        .rec{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+        }
+        #get-recommendations-btn {
+            margin-top: 30px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.5s ease-in;
+        }
+
+        #get-recommendations-btn:hover {
+            background-color: #45a049;
+            transform: scale(1.1 , 1.1);
+        }
+        .progress-text{
+            font-family: cursive;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            right: inherit;
+        }
+        
+
     </style>
 </head>
 <body>
@@ -108,6 +179,15 @@
     <!-- Question 1: Number of rooms -->
     <form action="{%url 'home' %}" method="POST">
         {%csrf_token%}
+
+        
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"> <div class="progress-text" >0%</div> <!-- Progress text --></div>
+               
+            </div>
+
+
        <div class="question-container" id="question-1">
         <h1>How many rooms do you have in your house?</h1>
         <div class="cards">
@@ -355,7 +435,13 @@
         </div>
     </div>
 
-    <input type="submit" value="Get Recommendations" id="get-recommendations-btn" style="display: block;">
+
+
+
+   <div class="rec">
+    <div id="processing-messages" class="processing-message"></div>
+    <input type="submit" value="Get Recommendations" id="get-recommendations-btn" style="display: none; ">
+</div>
 </form>
 
     {% if result %}
@@ -389,27 +475,69 @@
         const nextBtn = question.querySelector('.next-btn');
         if (nextBtn && selectedValue) {
             nextBtn.style.display = 'block';
+
+
+
         }
     }
 
     $(document).ready(function() {
-        // Hide the "Get Recommendations" button initially
-        $("#get-recommendations-btn").hide();
+        let currentQuestionIndex = 0;
+        let questionCount = $(".question-container").length+1;
+        let progressBarWidth = 0;
+        const processingMessages = [
+            "Please wait...",
+
+            "Analyzing your data...",
+
+
+            "Solutions found!",
+
+            "Getting results :)",
+            '         '
+
+        ];
 
         $(".next-btn").click(function(event) {
             event.preventDefault();
             $(".question-container").eq(currentQuestionIndex).hide();
             currentQuestionIndex++;
+
+            // Calculate progress bar width based on question count
+            progressBarWidth = Math.floor(((currentQuestionIndex + 1) / questionCount) * 100);
+            $("#progress-bar").css("width", progressBarWidth + "%");
+            
+            // Update progress text
+            $(".progress-text").text(progressBarWidth + "% completed");
+
             const nextQuestion = $(".question-container").eq(currentQuestionIndex);
             if (nextQuestion.length > 0) {
                 nextQuestion.show();
             } else {
-                $("#get-recommendations-btn").show();
+
+                animateProcessingMessages(processingMessages);
+               
             }
         });
 
-
-    });
+        // Initial progress text setup
+        $(".progress-text").text("0% completed");
+        function animateProcessingMessages(messages) {
+            const processingDiv = $("#processing-messages");
+            processingDiv.fadeIn(300); // Fade in the first message
+            let i = 0;
+            const intervalId = setInterval(() => {
+                processingDiv.append("<div>" + messages[i] + "</div>");
+                i++;
+                if (i >= messages.length) {
+                    clearInterval(intervalId);
+                    $("#get-recommendations-btn").show();
+                    // You can redirect or perform other actions after processing
+                }
+            }, 2000); // Change message every 2 seconds
+        }
+        
+    });           
 </script>
 
 </body>

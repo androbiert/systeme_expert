@@ -1,9 +1,17 @@
 from django.shortcuts import render
 from aima.logic import FolKB
-from .main import get_recommendations, impliment_facts
+from .main import get_recommendations, impliment_facts , get_final
 
 def home(request):
-    result = {}
+    result = input_process(request=request)
+    return render(request, 'EnergyCost/bar.html', {'result': result})
+
+def PageProcess(request):
+    return render(request,'EnergyCost/Form_Process.html')
+
+
+def input_process(request):
+    result = []
     if request.method == 'POST':
         kb = FolKB()
         facts = []
@@ -53,8 +61,9 @@ def home(request):
 
         # Update knowledge base based on user input
         impliment_facts(kb=kb,facts=facts)
-        result = get_recommendations(kb=kb)
-        
-
-    return render(request, 'EnergyCost/home2.html', {'result': result})
+        recommendations = get_recommendations(kb=kb)
+        result = get_final(recommendations=recommendations)
+        print(result)
+        return result
+    return None
 
