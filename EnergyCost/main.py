@@ -159,10 +159,9 @@ def parse_suggestions_file(file_name):
                 if suggestion_title is not None:
                     suggestions_data[suggestion_title] = steps
                 suggestion_title = line.split('Suggestion: ')[1]
-                print("i am sug title" + suggestion_title)
+
                 steps = []
             elif line.startswith('Steps to '):
-                print("i am in steps of "+suggestion_title)
                 continue
             else:
 
