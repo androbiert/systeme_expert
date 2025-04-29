@@ -1,4 +1,4 @@
-from aima.logic import  expr, fol_fc_ask,FolKB
+from aima3.logic import  expr, fol_fc_ask,FolKB
 
 
 def impliment_facts(kb,facts):
@@ -82,6 +82,7 @@ def implement_rules(kb):
     kb.tell(expr('(Number_of_rooms(house, Many) & House(house)) ==> Vast_house(house)'))
     kb.tell(expr('Vast_house(house) & Insulation(house, Poor) ==> Energy_loss(house)  '))
 
+# 27 Rules Overall
 
 # Define a function to determine temperature range
 def determine_temperature_range(temperature):

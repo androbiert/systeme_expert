@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from aima.logic import FolKB
+from aima3.logic import FolKB
 from .main import get_recommendations, impliment_facts , get_final
 
 def home(request):

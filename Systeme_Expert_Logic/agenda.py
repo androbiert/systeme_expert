@@ -48,7 +48,6 @@ kb.tell(expr('House(House)'))
 kb.tell(expr('Uses_incandescent_bulbs(House)'))
 kb.tell(expr('Insulation(House, Poor)'))
 kb.tell(expr('Efficiency_appliances(House, Low)'))
-
 kb.tell(expr('(Uses_incandescent_bulbs(x) & House(x)) ==> Increase_heat_output(x)'))
 kb.tell(expr('(Uses_incandescent_bulbs(x) & House(x)) ==> High_energy_consumption(x)'))
 #Rule .. 
