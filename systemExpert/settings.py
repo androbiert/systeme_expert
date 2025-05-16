@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-a4$7u!)24r0=@-#nove$ssf6u9_37#33dwr%_#_2l_nx1v9o7u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -123,10 +123,11 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# STATIC_ROOT = BASE_DIR / "staticfiles"
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # pour collectstatic
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+# Facultatif mais conseillé
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+MIDDLEWARE = ['whitenoise.middleware.WhiteNoiseMiddleware', *MIDDLEWARE]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
