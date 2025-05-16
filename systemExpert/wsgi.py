@@ -13,6 +13,4 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'systemExpert.settings')
 
-application = get_wsgi_application()
-
-app = application
+handler = get_wsgi_application() 
